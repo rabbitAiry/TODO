@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/button_done"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/button_off"
+        android:focusableInTouchMode="false" />
+
+    <TextView
+        android:id="@+id/todo_item_description"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="14dp"
+        android:layout_toLeftOf="@id/become_urgent"
+        android:layout_toRightOf="@id/button_done"
+        android:gravity="center_vertical"
+        android:textSize="24dp"
+        tools:text="吃饭" />
+
+    <ImageButton
+        android:id="@+id/become_urgent"
+        style="@style/cold_button"
+        android:layout_marginVertical="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/become_cold"
+        android:background="@drawable/urgent" />
+
+    <ImageButton
+        android:id="@+id/become_cold"
+        style="@style/cold_button"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="19dp"
+        android:layout_marginRight="22dp"
+        android:layout_toLeftOf="@id/todo_item_status_bar"
+        android:background="@drawable/cold" />
+
+    <ImageView
+        android:id="@+id/todo_item_status_bar"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginVertical="16dp"
+        android:layout_marginRight="32dp"
+        android:background="@color/urgent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="20dp"
+        android:background="@color/dark20" />
+</RelativeLayout>

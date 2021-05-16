@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="?attr/cold_bgColor"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/cold_item_description"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="28dp"
+        android:gravity="center"
+        android:textSize="24dp"
+        android:background="@null"
+        tools:text="吃饭" />
+
+    <ImageButton
+        android:id="@+id/become_urgent_fromCold"
+        style="@style/cold_button"
+        android:layout_marginVertical="20dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@id/become_no_cold"
+        android:background="@drawable/urgent" />
+
+    <ImageButton
+        android:id="@+id/become_no_cold"
+        style="@style/cold_button"
+        android:layout_marginTop="21dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="19dp"
+        android:layout_toLeftOf="@id/cold_item_status_bar"
+        android:background="@drawable/no_cold" />
+
+    <ImageView
+        android:id="@+id/cold_item_status_bar"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginVertical="16dp"
+        android:layout_marginRight="32dp"
+        android:background="@color/cold" />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="20dp"
+        android:background="@color/dark20" />
+</RelativeLayout>
