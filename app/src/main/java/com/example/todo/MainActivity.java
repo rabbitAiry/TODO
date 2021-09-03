@@ -3,116 +3,129 @@ package com.example.todo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActivityOptions;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.example.todo.data.TodoHelper;
 import com.example.todo.data.TodoContract.TodoEntry;
 
-public class MainActivity extends AppCompatActivity implements TodoListAdapter.TodoItemListener {
-    private TextView addTextViewButton;
-    private RecyclerView recyclerViewTodoList;
-    private TodoListAdapter adapter;
-    private SQLiteDatabase dbRead;
-    private SQLiteDatabase dbWrite;
-    public static final int TO_ACTIVITY_ADD_TODO = 1;
-    public static final int TO_ACTIVITY_COLD_TODO = 2;
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity {
+    private SQLiteDatabase todoReadDatabase;
+    private SQLiteDatabase todoWriteDatabase;
+    private View toolbarIndicatorNow;
+    private View toolbarIndicatorAll;
+    private FragmentManager mainFragmentManager;
+    private FragmentNow fragmentNow;
+    private FragmentAll fragmentAll;
+    private GestureDetector gestureDetector;
+    boolean isFragmentNow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        TodoHelper helper = new TodoHelper(this);
-        dbRead = helper.getReadableDatabase();
-        dbWrite = helper.getWritableDatabase();
-        Cursor cursor = getCursorMainActivity();
+        TextView toolbarTagNow = findViewById(R.id.main_toolbar_textview_now);
+        TextView toolbarTagAll = findViewById(R.id.main_toolbar_textview_all);
+        toolbarIndicatorNow = findViewById(R.id.main_toolbar_indicator_now);
+        toolbarIndicatorAll = findViewById(R.id.main_toolbar_indicator_all);
 
-        recyclerViewTodoList = (RecyclerView) findViewById(R.id.recyclerView_todo_list);
-        adapter = new TodoListAdapter(cursor, this, this);
-        recyclerViewTodoList.setAdapter(adapter);
-        recyclerViewTodoList.setLayoutManager(new LinearLayoutManager(this));
+        fragmentNow = new FragmentNow();
+        fragmentAll = new FragmentAll();
+        mainFragmentManager = getSupportFragmentManager();
+        mainFragmentManager.beginTransaction()
+                .add(R.id.main_activity_container, fragmentNow)
+                .commit();
+        isFragmentNow = true;
 
-        addTextViewButton = (TextView) findViewById(R.id.textView_button_add_content);
-        addTextViewButton.setOnClickListener(new View.OnClickListener() {
+        toolbarTagNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Edit_Todo_Activity.class);
-                startActivityForResult(intent,
-                        TO_ACTIVITY_ADD_TODO,
-                        ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
+                setFragmentNow();
             }
         });
+        toolbarTagAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFragmentAll();
+            }
+        });
+
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                float differ = e2.getX() - e1.getX();
+                if (differ > 30) {
+                    setFragmentNow();
+                } else if (differ < -30) {
+                    setFragmentAll();
+                }
+                return false;
+            }
+        });
+
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            adapter.swapCursor(getCursorMainActivity());
+    public boolean onTouchEvent(MotionEvent event) {
+        return gestureDetector.onTouchEvent(event);
+    }
+
+    private void setFragmentNow() {
+        if (!isFragmentNow) {
+            toolbarIndicatorNow.setVisibility(View.VISIBLE);
+            toolbarIndicatorAll.setVisibility(View.INVISIBLE);
+            mainFragmentManager.beginTransaction()
+                    .replace(R.id.main_activity_container, fragmentNow)
+                    .commit();
+            isFragmentNow = true;
         }
     }
 
-    private Cursor getCursorMainActivity() {
-        String selection = TodoEntry.COLUMN_STATUS + " IN(?,?)";
-        String[] selectionArgs = {"0", "1"};
-
-        Cursor cursor = dbRead.query(TodoEntry.TABLE_NAME,
-                null,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                TodoEntry.COLUMN_STATUS + " DESC");
-        return cursor;
+    private void setFragmentAll() {
+        if (isFragmentNow) {
+            toolbarIndicatorNow.setVisibility(View.INVISIBLE);
+            toolbarIndicatorAll.setVisibility(View.VISIBLE);
+            mainFragmentManager.beginTransaction()
+                    .replace(R.id.main_activity_container, fragmentAll)
+                    .commit();
+            isFragmentNow = false;
+        }
     }
 
-    @Override
-    public void onDoneClick(long id) {
-        String selection = TodoEntry._ID + "=" + id;
-        dbWrite.delete(TodoEntry.TABLE_NAME, selection, null);
-        adapter.swapCursor(getCursorMainActivity());
-    }
-
-    @Override
-    public void onStatusChangeClick(long id, int becoming) {
-        ContentValues cv = new ContentValues();
-        cv.put(TodoEntry.COLUMN_STATUS, becoming);
-        String selection = TodoEntry._ID + "=" + id;
-        dbWrite.update(TodoEntry.TABLE_NAME, cv, selection, null);
-        adapter.swapCursor(getCursorMainActivity());
+    public int getTodayKey() {
+        Calendar c = Calendar.getInstance();
+        return c.get(1) * 10000 + (c.get(2) + 1) * 100 + c.get(5);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemId = item.getItemId();
-        switch (itemId) {
-            case R.id.menu_start_cold_Activity:
-                Intent intent = new Intent(this, Cold_Todo_Activity.class);
-                startActivityForResult(intent,
-                        TO_ACTIVITY_COLD_TODO,
-                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

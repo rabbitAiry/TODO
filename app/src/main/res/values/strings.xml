@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">TODO</string>
+    <string name="main_toolbar_now">NOW</string>
+    <string name="main_toolbar_all">全部</string>
+    <string name="type_all">全部</string>
+    <string name="type_normal">普通</string>
+    <string name="type_urgent">紧急</string>
+    <string name="type_daily">每日</string>
+    <string name="type_cold">冷藏</string>
+    <string name="done">确认</string>
+    <string name="description">描述 :</string>
+    <string name="add_todo_label">添加待办事项</string>
+    <string name="edit_todo_label">修改待办事项</string>
 </resources>

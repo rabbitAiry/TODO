@@ -10,9 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TODO">
         <activity
-            android:name=".Cold_Todo_Activity"
-            android:label="冷宫"></activity>
-        <activity android:name=".Edit_Todo_Activity" />
+            android:name=".AddTodoActivity"
+            android:label="添加你的事项" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

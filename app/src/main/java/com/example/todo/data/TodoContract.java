@@ -8,10 +8,14 @@ public class TodoContract {
 
     public class TodoEntry implements BaseColumns {
         public static final String TABLE_NAME = "TODO";
-        public static final String COLUMN_ITEM = "ITEM";
-        public static final String COLUMN_STATUS = "STATUS";
-        public static final int categoryNormal = 0;
-        public static final int categoryUrgent = 1;
-        public static final int categoryCold = 2;
+        public static final String COLUMN_NAME = "NAME";
+        public static final String COLUMN_TYPE = "TYPE";
+        public static final String COLUMN_IS_VISIBLE = "IsVISIBLE";
+        public static final String COLUMN_LATEST_DATE = "LatestDATE";
+        public static final String COLUMN_HAS_REMINDER = "HasREMINDER";
+        public static final int CATEGORY_NORMAL = 1;
+        public static final int CATEGORY_URGENT = 2;
+        public static final int CATEGORY_DAILY = 3;
+        public static final int CATEGORY_COLD = 5;
     }
 }

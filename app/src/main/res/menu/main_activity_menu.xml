@@ -3,6 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_start_cold_Activity"
-        android:title="进入冷宫"
-        app:showAsAction="ifRoom" />
+        android:title="设置"
+        app:showAsAction="never" />
 </menu>

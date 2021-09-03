@@ -1,36 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="edit_todo_radio_list">
+        <item name="android:layout_height">250dp</item>
+        <item name="android:paddingTop">36dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
     <style name="edit_todo_status_bar">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">28dp</item>
-        <item name="android:layout_marginVertical">19dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_marginVertical">14dp</item>
     </style>
 
     <style name="edit_todo_radio_button">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:textSize">26dp</item>
+        <item name="android:gravity">left</item>
         <item name="android:layoutDirection">rtl</item>
-        <item name="android:textSize">28dp</item>
         <item name="android:layout_marginVertical">8dp</item>
+        <item name="android:textColor">@color/grey40</item>
     </style>
 
-    <style name="cold_button">
-        <item name="android:layout_width">28dp</item>
+    <style name="main_toolbar_text">
+        <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="fontFamily">sans-serif</item>
         <item name="android:gravity">center</item>
+        <item name="android:textSize">28dp</item>
     </style>
 
-    <style name="to_cold_activity" parent="android:Theme.Material">
-        <item name="android:windowActivityTransitions">true</item>
-        <item name="android:windowEnterTransition">@android:transition/explode</item>
-        <item name="android:windowExitTransition">@android:transition/explode</item>
+    <style name="main_toolbar_indicator">
+        <item name="android:layout_height">4dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:layout_marginHorizontal">20dp</item>
+        <item name="android:background">@color/lime900</item>
+    </style>
 
-        <item name="android:windowSharedElementEnterTransition">
-            @transition/change_image_transform
-        </item>
-        <item name="android:windowSharedElementExitTransition">
-            @transition/change_image_transform
-        </item>
+    <style name="fragment_all_select_radio_button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@color/grey5</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="fragment_all_radio_indicator">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 </resources>

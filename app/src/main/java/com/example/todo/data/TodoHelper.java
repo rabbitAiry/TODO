@@ -9,15 +9,16 @@ import com.example.todo.data.TodoContract.TodoEntry;
 import androidx.annotation.Nullable;
 
 public class TodoHelper extends SQLiteOpenHelper {
-    public static final int version = 1;
-    public static final String name = "todo.db";
+    public static final int VERSION = 2;
+    public static final String TODO_DB = "todo.db";
 
     public TodoHelper(@Nullable Context context) {
-        super(context, name, null, version);
+        super(context, TODO_DB, null, VERSION);
     }
 
     private static final String create = "CREATE TABLE " + TodoEntry.TABLE_NAME + " (" + TodoEntry._ID +
-            " INTEGER PRIMARY KEY," + TodoEntry.COLUMN_ITEM + " TEXT," + TodoEntry.COLUMN_STATUS + " INTEGER)";
+            " INTEGER PRIMARY KEY," + TodoEntry.COLUMN_NAME + " TEXT," + TodoEntry.COLUMN_TYPE + " TINYINT,"
+            + TodoEntry.COLUMN_IS_VISIBLE + " BOOLEAN," + TodoEntry.COLUMN_LATEST_DATE + "INTEGER)";
 
     private static final String delete = "DROP TABLE IF EXISTS " + TodoEntry.TABLE_NAME;
 
