@@ -12,6 +12,9 @@
         <activity
             android:name=".AddTodoActivity"
             android:label="添加你的事项" />
+        <activity
+            android:name=".EditTodoActivity"
+            android:label="修改你的事项" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

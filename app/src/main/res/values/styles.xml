@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="edit_todo_radio_list">
+    <style name="todo_radio_list_layout">
         <item name="android:layout_height">250dp</item>
         <item name="android:paddingTop">36dp</item>
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="edit_todo_status_bar">
+    <style name="edit_todo_status_list_layout" parent="todo_radio_list_layout">
+        <item name="android:layout_height">280dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:layout_marginBottom">320dp</item>
+    </style>
+
+    <style name="todo_status_bar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">24dp</item>
         <item name="android:layout_marginVertical">14dp</item>
@@ -16,7 +22,7 @@
     <style name="edit_todo_radio_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">36dp</item>
-        <item name="android:textSize">26dp</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:gravity">left</item>
         <item name="android:layoutDirection">rtl</item>
         <item name="android:layout_marginVertical">8dp</item>

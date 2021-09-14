@@ -16,20 +16,20 @@ public class TodoHelper extends SQLiteOpenHelper {
         super(context, TODO_DB, null, VERSION);
     }
 
-    private static final String create = "CREATE TABLE " + TodoEntry.TABLE_NAME + " (" + TodoEntry._ID +
-            " INTEGER PRIMARY KEY," + TodoEntry.COLUMN_NAME + " TEXT," + TodoEntry.COLUMN_TYPE + " TINYINT,"
-            + TodoEntry.COLUMN_IS_VISIBLE + " BOOLEAN," + TodoEntry.COLUMN_LATEST_DATE + "INTEGER)";
+    private static final String CREATE_TABLE_TODO = "CREATE TABLE " + TodoEntry.TABLE_TODO + " (" + TodoEntry._ID +
+            " INTEGER PRIMARY KEY," + TodoEntry.TODO_COLUMN_CONTENT + " TEXT," + TodoEntry.TODO_COLUMN_TYPE + " TINYINT,"
+            + TodoEntry.TODO_COLUMN_IS_CREATED_BY_DAILY + " TINYINT)";
 
-    private static final String delete = "DROP TABLE IF EXISTS " + TodoEntry.TABLE_NAME;
+    private static final String DELETE_TABLE_TODO = "DROP TABLE IF EXISTS " + TodoEntry.TABLE_TODO;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(create);
+        db.execSQL(CREATE_TABLE_TODO);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(delete);
+        db.execSQL(DELETE_TABLE_TODO);
         onCreate(db);
     }
 }

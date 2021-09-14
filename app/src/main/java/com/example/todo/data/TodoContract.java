@@ -6,16 +6,13 @@ public class TodoContract {
     private TodoContract() {
     }
 
-    public class TodoEntry implements BaseColumns {
-        public static final String TABLE_NAME = "TODO";
-        public static final String COLUMN_NAME = "NAME";
-        public static final String COLUMN_TYPE = "TYPE";
-        public static final String COLUMN_IS_VISIBLE = "IsVISIBLE";
-        public static final String COLUMN_LATEST_DATE = "LatestDATE";
-        public static final String COLUMN_HAS_REMINDER = "HasREMINDER";
-        public static final int CATEGORY_NORMAL = 1;
-        public static final int CATEGORY_URGENT = 2;
-        public static final int CATEGORY_DAILY = 3;
-        public static final int CATEGORY_COLD = 5;
+    public static class TodoEntry implements BaseColumns {
+        public static final String TABLE_TODO = "TODO";
+        public static final String TODO_COLUMN_CONTENT = "CONTENT";
+        public static final String TODO_COLUMN_TYPE = "TYPE";
+        public static final String TODO_COLUMN_IS_CREATED_BY_DAILY = "IS_DAILY";
+//        public static final String TODO_COLUMN_DATE = "DATE";
+//        public static final String TODO_COLUMN_HAS_REMINDER = "HAS_REMINDER";
+//        public static final String TODO_COLUMN_REMIND_TIME = "REMIND_TIME";
     }
 }

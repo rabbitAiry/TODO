@@ -25,6 +25,7 @@
     <color name="normal">#66BB6A</color>
     <color name="cold">#727E7E</color>
     <color name="daily">#29B6F6</color>
+    <color name="delete">#FF7043</color>
     <color name="bg_time_attr">#C8E6C9</color>
 
 

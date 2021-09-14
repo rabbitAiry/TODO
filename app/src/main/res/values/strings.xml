@@ -11,4 +11,6 @@
     <string name="description">描述 :</string>
     <string name="add_todo_label">添加待办事项</string>
     <string name="edit_todo_label">修改待办事项</string>
+    <string name="daily">每日</string>
+    <string name="delete">删除</string>
 </resources>
