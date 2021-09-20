@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main"
+    android:background="@color/bg_time_attr"
     tools:context=".AddTodoActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/add_todo_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/cold_bg_light">
+        android:background="@color/white">
 
         <TextView
             android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                 android:layout_width="180dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
-                android:maxLength="25"
+                android:maxLength="15"
                 android:paddingStart="12dp"
                 android:singleLine="true"
                 android:textSize="20sp"

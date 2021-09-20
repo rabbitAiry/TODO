@@ -58,8 +58,9 @@
         android:layout_toRightOf="@id/item_relative_layout"
         android:gravity="center_vertical"
         android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         tools:text="吃饭睡觉打豆豆"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+        android:ellipsize="end" />
 
     <ImageView
         android:id="@+id/item_to_urgent_button"

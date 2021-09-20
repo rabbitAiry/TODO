@@ -23,6 +23,7 @@ import com.example.todo.data.TypeUtils;
 public class EditTodoActivity extends AppCompatActivity {
     private EditText editContent;
     private RadioGroup radioGroupEdit;
+    private String contentOrigin;
     public static final int NOW_EDIT_CODE = 1;
 
     @Override
@@ -37,7 +38,7 @@ public class EditTodoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         long id = intent.getLongExtra(AllAdapter.ITEM_ID, 0L);
         int type = intent.getIntExtra(AllAdapter.ITEM_TYPE, TypeUtils.TYPE_NORMAL);
-        String content = intent.getStringExtra(AllAdapter.ITEM_CONTENT);
+        contentOrigin = intent.getStringExtra(AllAdapter.ITEM_CONTENT);
 
         editContent = findViewById(R.id.edit_todo_content);
         View viewIndicator = findViewById(R.id.edit_todo_indicator);
@@ -56,16 +57,17 @@ public class EditTodoActivity extends AppCompatActivity {
                 editTodoButtonUrgent.setChecked(true);
                 break;
             case TypeUtils.TYPE_DAILY:
-                editTodoButtonNormal.setActivated(false);
-                editTodoButtonUrgent.setActivated(false);
-                editTodoButtonCold.setActivated(false);
+                editTodoButtonDaily.setChecked(true);
+                editTodoButtonNormal.setEnabled(false);
+                editTodoButtonUrgent.setEnabled(false);
+                editTodoButtonCold.setEnabled(false);
                 break;
             case TypeUtils.TYPE_COLD:
                 editTodoButtonCold.setChecked(true);
         }
 
         viewIndicator.setBackgroundColor(TypeUtils.getTypeColor(type, this));
-        editContent.setText(content);
+        editContent.setText(contentOrigin);
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,21 +110,30 @@ public class EditTodoActivity extends AppCompatActivity {
         }
         TodoHelper helper = new TodoHelper(EditTodoActivity.this);
         SQLiteDatabase writeDatabase = helper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        boolean isUpdateNeeded = false;
+        if (!content.equals(contentOrigin)) {
+            cv.put(TodoEntry.TODO_COLUMN_CONTENT, content);
+            isUpdateNeeded = true;
+        }
         if (towardsType == TypeUtils.TYPE_DELETE) {
             writeDatabase.delete(TodoEntry.TABLE_TODO, TodoEntry._ID + "=" + id, null);
+            setResult(RESULT_OK);
         } else if (type != towardsType) {
-            ContentValues cv = new ContentValues();
             cv.put(TodoEntry.TODO_COLUMN_TYPE, towardsType);
-            writeDatabase.update(TodoEntry.TABLE_TODO, cv, TodoEntry._ID + "=" + id, null);
             if (type == TypeUtils.TYPE_DAILY) {
                 cv.put(TodoEntry.TODO_COLUMN_CONTENT, content);
                 cv.put(TodoEntry.TODO_COLUMN_TYPE, TypeUtils.TYPE_NORMAL);
                 cv.put(TodoEntry.TODO_COLUMN_IS_CREATED_BY_DAILY, 1);
                 writeDatabase.insert(TodoEntry.TABLE_TODO, null, cv);
             }
+            isUpdateNeeded = true;
+        }
+        if (isUpdateNeeded) {
+            writeDatabase.update(TodoEntry.TABLE_TODO, cv, TodoEntry._ID + "=" + id, null);
+            setResult(RESULT_OK);
         }
         writeDatabase.close();
-        setResult(RESULT_OK);
         finish();
     }
 }

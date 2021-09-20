@@ -82,6 +82,8 @@ public class AllAdapter extends RecyclerView.Adapter<ListAllViewHolder> {
             notifyDataSetChanged();
         }
     }
+
+
 }
 
 class ListAllViewHolder extends RecyclerView.ViewHolder {

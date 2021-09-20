@@ -58,20 +58,13 @@ public class FragmentNow extends Fragment {
     }
 
     public Cursor getCursorData() {
-        Log.d(TAG, "getCursorData: ready to get" + todoReadDatabase);
-        Cursor cursor1 = null;
-        try {
-            cursor1 = todoReadDatabase.query(TodoContract.TodoEntry.TABLE_TODO,
-                    null,
-                    TodoContract.TodoEntry.TODO_COLUMN_TYPE + " IN(?,?)",
-                    new String[]{Integer.toString(TypeUtils.TYPE_URGENT), Integer.toString(TypeUtils.TYPE_NORMAL)},
-                    null,
-                    null,
-                    TodoContract.TodoEntry.TODO_COLUMN_TYPE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return cursor1;
+        return todoReadDatabase.query(TodoContract.TodoEntry.TABLE_TODO,
+                null,
+                TodoContract.TodoEntry.TODO_COLUMN_TYPE + " IN(?,?)",
+                new String[]{Integer.toString(TypeUtils.TYPE_URGENT), Integer.toString(TypeUtils.TYPE_NORMAL)},
+                null,
+                null,
+                TodoContract.TodoEntry.TODO_COLUMN_TYPE);
     }
 
     @Override

@@ -54,7 +54,8 @@
                     android:layout_marginHorizontal="28dp"
                     android:layout_toLeftOf="@id/edit_todo_indicator"
                     android:gravity="center_vertical"
-                    android:maxLines="1"
+                    android:maxLength="15"
+                    android:singleLine="true"
                     android:textSize="26sp"
                     tools:text="吃饭" />
 

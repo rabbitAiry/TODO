@@ -48,7 +48,9 @@ public class NowAdapter extends AllAdapter {
         holder.itemButtonDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor cursor = listener.onButtonDoneClicked(id);
+                Cursor newCursor = listener.onButtonDoneClicked(id);
+                if (cursor != null) cursor.close();
+                cursor = newCursor;
                 notifyItemRemoved(holder.getAdapterPosition());
             }
         });

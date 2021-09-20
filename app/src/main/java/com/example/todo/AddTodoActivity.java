@@ -61,15 +61,15 @@ public class AddTodoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_ENTER:
-                todoSubmit();
-            default:
-                return super.onKeyUp(keyCode, event);
-        }
-    }
+//    @Override
+//    public boolean onKeyUp(int keyCode, KeyEvent event) {
+//        switch (keyCode) {
+//            case KeyEvent.KEYCODE_ENTER:
+//                todoSubmit();
+//            default:
+//                return super.onKeyUp(keyCode, event);
+//        }
+//    }
 
     private void todoSubmit() {
         String content = editContent.getText().toString();
