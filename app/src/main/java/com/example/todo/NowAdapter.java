@@ -23,6 +23,12 @@ public class NowAdapter extends AllAdapter {
         Cursor onButtonToUrgentClicked(long id);
     }
 
+    /**
+     * add additional item_done_button and item_to_urgent_button
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ListAllViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);

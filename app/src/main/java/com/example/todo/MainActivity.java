@@ -12,11 +12,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -84,6 +82,10 @@ public class MainActivity extends AppCompatActivity implements GestureSwap.Gestu
         });
     }
 
+    /**
+     * Called by method in GestureSwap
+     * this method will change fragment
+     */
     @Override
     public void onFlingListener(int gestureKey) {
         switch (gestureKey) {
@@ -103,6 +105,11 @@ public class MainActivity extends AppCompatActivity implements GestureSwap.Gestu
             progressBar.setVisibility(View.VISIBLE);
         }
 
+        /**
+         * if it is your first time open this app,
+         * this method will create normal todo_item by daily todo_item
+         * and clear the yesterday one or longer
+         */
         @Override
         protected Void doInBackground(Void... voids) {
             TodoHelper helper = new TodoHelper(MainActivity.this);
@@ -146,6 +153,9 @@ public class MainActivity extends AppCompatActivity implements GestureSwap.Gestu
         }
     }
 
+    /**
+     * set the page of "NOW"
+     */
     private void setFragmentNow() {
         if (!isFragmentNow) {
             mainFragmentManager.beginTransaction()
@@ -158,6 +168,9 @@ public class MainActivity extends AppCompatActivity implements GestureSwap.Gestu
         }
     }
 
+    /**
+     * set the page of "All"
+     */
     private void setFragmentAll() {
         if (isFragmentNow) {
             mainFragmentManager.beginTransaction()
@@ -170,6 +183,9 @@ public class MainActivity extends AppCompatActivity implements GestureSwap.Gestu
         }
     }
 
+    /**
+     * convert date of today to a unique token
+     */
     public int getTodayToken() {
         Calendar c = Calendar.getInstance();
         return c.get(1) * 10000 + (c.get(2) + 1) * 100 + c.get(5);
@@ -181,6 +197,9 @@ public class MainActivity extends AppCompatActivity implements GestureSwap.Gestu
 //        return true;
 //    }
 
+    /**
+     * handle the click event of todo_item
+     */
     class NowButtonClickedEvent implements NowAdapter.NowButtonClickedListener {
         @Override
         public Cursor onButtonDoneClicked(long id) {

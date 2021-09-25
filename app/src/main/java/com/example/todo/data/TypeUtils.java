@@ -6,6 +6,9 @@ import android.content.res.Resources;
 import com.example.todo.R;
 
 public class TypeUtils {
+    /**
+     * type key of todo_item
+     */
     public static final int TYPE_ALL = 0;
     public static final int TYPE_URGENT = 1;
     public static final int TYPE_DAILY = 2;

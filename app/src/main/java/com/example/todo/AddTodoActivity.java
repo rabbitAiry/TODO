@@ -52,6 +52,12 @@ public class AddTodoActivity extends AppCompatActivity {
         this.setResult(RESULT_ADD_SUCCESSFULLY);
     }
 
+    /**
+     * on response to action when user clicked the "←" button in the toolbar
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -61,16 +67,27 @@ public class AddTodoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public boolean onKeyUp(int keyCode, KeyEvent event) {
-//        switch (keyCode) {
-//            case KeyEvent.KEYCODE_ENTER:
-//                todoSubmit();
-//            default:
-//                return super.onKeyUp(keyCode, event);
-//        }
-//    }
+    /**
+     * handle user's input via keyboard
+     * when user clicked on button "√" in the keyboard, call todoSubmit()
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_ENTER:
+                todoSubmit();
+            default:
+                return super.onKeyUp(keyCode, event);
+        }
+    }
 
+    /**
+     * get user's input and put them in database
+     */
     private void todoSubmit() {
         String content = editContent.getText().toString();
         if (content.trim().length() == 0) {

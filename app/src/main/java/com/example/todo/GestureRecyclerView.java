@@ -9,6 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * default RecyclerView has its own gesture and therefore, my gesture of swap can't be capture.
+ * In this class, the GestureRecyclerView will judge isn't the gesture is swap first, and then call super.onTouchEvent(e)
+ */
 public class GestureRecyclerView extends RecyclerView {
     GestureDetector gestureDetector;
 

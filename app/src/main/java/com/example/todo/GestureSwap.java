@@ -16,6 +16,15 @@ public class GestureSwap extends GestureDetector.SimpleOnGestureListener {
         this.gestureSwapListener = gestureSwapListener;
     }
 
+    /**
+     * judge the gesture
+     *
+     * @param e1
+     * @param e2
+     * @param velocityX
+     * @param velocityY
+     * @return
+     */
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         if (e1 == null || e2 == null) return false;

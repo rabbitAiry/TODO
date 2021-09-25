@@ -76,6 +76,12 @@ public class EditTodoActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * on response to action when user clicked the "←" button in the toolbar
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -85,12 +91,13 @@ public class EditTodoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * update the content of todo_item, or simply delete it
+     *
+     * @param type
+     * @param id
+     */
     private void todoSubmit(int type, long id) {
-        String content = editContent.getText().toString();
-        if (content.trim().length() == 0) {
-            Toast.makeText(EditTodoActivity.this, "内容不应为空", Toast.LENGTH_SHORT).show();
-            return;
-        }
         int towardsType = TypeUtils.TYPE_NORMAL;
         switch (radioGroupEdit.getCheckedRadioButtonId()) {
             case R.id.edit_todo_button_normal:
@@ -108,6 +115,11 @@ public class EditTodoActivity extends AppCompatActivity {
             case R.id.edit_todo_button_delete:
                 towardsType = TypeUtils.TYPE_DELETE;
         }
+        String content = editContent.getText().toString();
+        if (content.trim().length() == 0 && towardsType != TypeUtils.TYPE_DELETE) {
+            Toast.makeText(EditTodoActivity.this, "内容不应为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
         TodoHelper helper = new TodoHelper(EditTodoActivity.this);
         SQLiteDatabase writeDatabase = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -121,11 +133,12 @@ public class EditTodoActivity extends AppCompatActivity {
             setResult(RESULT_OK);
         } else if (type != towardsType) {
             cv.put(TodoEntry.TODO_COLUMN_TYPE, towardsType);
-            if (type == TypeUtils.TYPE_DAILY) {
-                cv.put(TodoEntry.TODO_COLUMN_CONTENT, content);
-                cv.put(TodoEntry.TODO_COLUMN_TYPE, TypeUtils.TYPE_NORMAL);
-                cv.put(TodoEntry.TODO_COLUMN_IS_CREATED_BY_DAILY, 1);
-                writeDatabase.insert(TodoEntry.TABLE_TODO, null, cv);
+            if (towardsType == TypeUtils.TYPE_DAILY) {
+                ContentValues cvDaily = new ContentValues();
+                cvDaily.put(TodoEntry.TODO_COLUMN_CONTENT, content);
+                cvDaily.put(TodoEntry.TODO_COLUMN_TYPE, TypeUtils.TYPE_NORMAL);
+                cvDaily.put(TodoEntry.TODO_COLUMN_IS_CREATED_BY_DAILY, 1);
+                writeDatabase.insert(TodoEntry.TABLE_TODO, null, cvDaily);
             }
             isUpdateNeeded = true;
         }

@@ -96,6 +96,11 @@ public class FragmentAll extends Fragment {
         return viewAll;
     }
 
+    /**
+     * get all data except those todo_item created by daily todo_item
+     *
+     * @return
+     */
     private Cursor getCursorAll() {
         return todoReadDatabase.query(TodoEntry.TABLE_TODO,
                 null,
@@ -106,6 +111,13 @@ public class FragmentAll extends Fragment {
                 TodoEntry.TODO_COLUMN_TYPE);
     }
 
+    /**
+     * when other radiobutton is clicked, this method will be called.
+     * this method will setVisibility of the indicator above the radiobutton
+     * and update the adapter by passing in a new cursor
+     *
+     * @param typeKey
+     */
     private void updateView(int typeKey) {
         Cursor cursor;
         fragmentAllRadioIndicatorAll.setVisibility(View.INVISIBLE);
