@@ -4,18 +4,28 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/appCreation/TODO/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.30052083333333335" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/bg_main.xml" value="0.2958974358974359" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/bg_radio_group.xml" value="0.2574074074074074" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/bg_radio_group_mask.xml" value="0.25462962962962965" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/bg_shape_time_attr.xml" value="0.30052083333333335" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/button_delete.xml" value="0.30052083333333335" />
         <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/button_off.xml" value="0.30052083333333335" />
         <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/button_square.xml" value="0.2958974358974359" />
         <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/ic_baseline_add_32.xml" value="0.2958974358974359" />
         <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/ic_baseline_add_50.xml" value="0.30052083333333335" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/ic_baseline_arrow_upward_24.xml" value="0.24166666666666667" />
         <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/main_6dp_main_rectangle.xml" value="0.2958974358974359" />
         <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/main_6dp_rectangle.xml" value="0.2958974358974359" />
-        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/activity_add_todo.xml" value="0.1" />
-        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/activity_edit_todo.xml" value="0.165" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/drawable/tag_type.xml" value="0.2958974358974359" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/activity_add_todo.xml" value="0.284375" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/activity_all_item.xml" value="0.24074074074074073" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/activity_edit_todo.xml" value="0.25" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/activity_main.xml" value="0.284375" />
         <entry key="..\:/appCreation/TODO/app/src/main/res/layout/fragment_all_todo.xml" value="0.284375" />
-        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/fragment_now_todo.xml" value="0.284375" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/fragment_now_todo.xml" value="0.2765567765567766" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/item_todo.xml" value="0.335" />
         <entry key="..\:/appCreation/TODO/app/src/main/res/layout/main_activity.xml" value="0.284375" />
-        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/todo_item.xml" value="0.335" />
+        <entry key="..\:/appCreation/TODO/app/src/main/res/layout/todo_item.xml" value="0.284375" />
         <entry key="..\:/appCreation/TODO/app/src/main/res/menu/main_activity_menu.xml" value="0.284375" />
         <entry key="..\:/appCreation/TODO/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1671875" />
       </map>

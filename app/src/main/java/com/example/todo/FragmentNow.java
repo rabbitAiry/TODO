@@ -2,85 +2,97 @@ package com.example.todo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todo.data.TodoContract;
-import com.example.todo.data.TodoHelper;
-import com.example.todo.data.TypeUtils;
+import com.example.todo.data.TodoItemDataUtil;
+import com.example.todo.data.TodoItem;
+import com.example.todo.databinding.FragmentNowTodoBinding;
+import com.example.todo.view.TodoItemAdapter;
+import com.example.todo.view.TodoNowAdapter;
 
-public class FragmentNow extends Fragment {
-    private SQLiteDatabase todoReadDatabase;
-    private final NowAdapter.NowButtonClickedListener listener;
+import java.util.List;
+
+public class FragmentNow extends Fragment{
+    private FragmentNowTodoBinding binding;
     private final Context context;
-    private NowAdapter adapter;
+    private TodoNowAdapter adapter;
+    private TodoItemDataUtil todoDataUtil;
     private static final String TAG = "Now";
+    public static int REQUEST_EDIT = 1;
 
-    public FragmentNow(Context context, SQLiteDatabase db, NowAdapter.NowButtonClickedListener listener) {
+    public FragmentNow(Context context) {
         this.context = context;
-        this.listener = listener;
-        todoReadDatabase = db;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View viewNow = inflater.inflate(R.layout.fragment_now_todo, container, false);
-        RecyclerView recyclerViewNowList = viewNow.findViewById(R.id.recyclerView_now_list);
-        TextView buttonAdd = viewNow.findViewById(R.id.button_add);
-        Log.d(TAG, "onCreateView: after using db");
+        binding = FragmentNowTodoBinding.inflate(inflater, container, false);
+        View viewNow = binding.getRoot();
 
-        adapter = new NowAdapter(context, getCursorData(), listener, new FragmentNow.AllTodoClickedEvent());
-        recyclerViewNowList.setLayoutManager(new LinearLayoutManager(context));
-        recyclerViewNowList.setAdapter(adapter);
-
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getContext(), AddTodoActivity.class);
-                startActivityForResult(i, AddTodoActivity.NOW_ADD_CODE);
-            }
+        inflateList();
+        binding.fragmentNowButtonAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ActivityEditTodo.class);
+            intent.putExtra(ActivityEditTodo.MODE, ActivityEditTodo.MODE_ADD);
+            startActivityForResult(intent, REQUEST_EDIT);
         });
 
         return viewNow;
     }
 
-    public Cursor getCursorData() {
-        return todoReadDatabase.query(TodoContract.TodoEntry.TABLE_TODO,
-                null,
-                TodoContract.TodoEntry.TODO_COLUMN_TYPE + " IN(?,?)",
-                new String[]{Integer.toString(TypeUtils.TYPE_URGENT), Integer.toString(TypeUtils.TYPE_NORMAL)},
-                null,
-                null,
-                TodoContract.TodoEntry.TODO_COLUMN_TYPE);
+    private void inflateList() {
+        new Thread(() -> {
+            todoDataUtil = TodoItemDataUtil.getInstance(context);
+            adapter = new TodoNowAdapter(todoDataUtil.getNowTodoItem(), context, new TodoItemAdapter.TodoListener() {
+                @Override
+                public void onItemLongClickListener(TodoItem item) {
+                    Intent intent = new Intent(context, ActivityEditTodo.class);
+                    intent.putExtra(ActivityEditTodo.TAG_TODO_ITEM, item);
+                    intent.putExtra(ActivityEditTodo.MODE, ActivityEditTodo.MODE_EDIT);
+                    startActivityForResult(intent, REQUEST_EDIT);
+                }
+
+                @Override
+                public void onDoneClickListener(TodoItem item) {
+                    new Thread(() -> todoDataUtil.deleteTodoItem(item)).start();
+                }
+
+                @Override
+                public void toUrgentClickListener(TodoItem item) {
+                    new Thread(() -> todoDataUtil.updateTodoItem(item)).start();
+                }
+            });
+            getActivity().runOnUiThread(() -> {
+                binding.fragmentNowList.setLayoutManager(new LinearLayoutManager(context));
+                binding.fragmentNowList.setAdapter(adapter);
+            });
+        }).start();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == MainActivity.RESULT_OK) {
-            if (requestCode == AddTodoActivity.NOW_ADD_CODE || requestCode == EditTodoActivity.NOW_EDIT_CODE) {
-                adapter.swapCursor(getCursorData());
+        if (resultCode == ActivityMain.RESULT_OK) {
+            if (requestCode == REQUEST_EDIT) {
+                new Thread(() -> {
+                    List<TodoItem> list = todoDataUtil.getNowTodoItem();
+                    getActivity().runOnUiThread(() -> adapter.refreshData(list));
+                }).start();
             }
         }
     }
 
-    class AllTodoClickedEvent implements AllAdapter.LongPressedListener {
-        @Override
-        public void gotoEditActivity(Intent intent) {
-            startActivityForResult(intent, EditTodoActivity.NOW_EDIT_CODE);
-        }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

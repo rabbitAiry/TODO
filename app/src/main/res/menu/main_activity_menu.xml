@@ -2,7 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_start_cold_Activity"
-        android:title="设置"
+        android:id="@+id/main_menu_list_all"
+        android:title="@string/all_item"
+        android:icon="@drawable/ic_baseline_all_24"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/main_menu_setting"
+        android:title="@string/setting"
         app:showAsAction="never" />
 </menu>

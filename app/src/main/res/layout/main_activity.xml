@@ -1,68 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="10dp"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="?colorPrimary">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/main_toolbar_textview_now"
-                style="@style/main_toolbar_text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:text="@string/main_toolbar_now" />
-
-            <TextView
-                android:id="@+id/main_toolbar_textview_all"
-                style="@style/main_toolbar_text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/main_toolbar_textview_now"
-                android:text="@string/main_toolbar_all" />
-
-            <View
-                style="@style/main_toolbar_indicator"
-                android:id="@+id/main_toolbar_indicator_now"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="@id/main_toolbar_textview_now"
-                android:background="@color/cold_bg_dark"
-                android:visibility="visible" />
-
-            <View
-                style="@style/main_toolbar_indicator"
-                android:id="@+id/main_toolbar_indicator_all"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="@id/main_toolbar_textview_all"
-                android:background="@color/cold_bg_dark"
-                android:visibility="invisible" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/main_toolbar_textview_now"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif"
+            android:gravity="bottom"
+            android:layout_marginLeft="28dp"
+            android:text="@string/main_toolbar_now"
+            android:textSize="42dp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/main_activity_container"
+    <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@id/main_toolbar"
-        android:layout_alignParentBottom="true" />
+        android:background="@drawable/bg_main"
+        android:layout_alignParentBottom="true"/>
 
-    <ProgressBar
-        android:id="@+id/main_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="6dp"
+        android:layout_marginBottom="-6dp"
+        android:paddingBottom="6dp"
+        android:layout_below="@id/main_toolbar"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
+        app:cardCornerRadius="10dp"/>
+
 </RelativeLayout>

@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ActivityMain">
 
-    <com.example.todo.GestureRecyclerView
-        android:id="@+id/recyclerView_now_list"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_now_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/todo_item" />
+        tools:listitem="@layout/item_todo" />
 
     <TextView
-        android:id="@+id/button_add"
+        android:id="@+id/fragment_now_button_add"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/main_6dp_rectangle"

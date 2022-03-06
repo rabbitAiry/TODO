@@ -4,5 +4,5 @@
         android:color="@color/lime100"
         android:width="2dp" />
     <solid android:color="@color/bg_time_attr" />
-    <corners android:radius="4dp" />
+    <corners android:radius="6dp" />
 </shape>

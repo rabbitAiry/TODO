@@ -7,15 +7,16 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/Theme.TODO">
         <activity
-            android:name=".AddTodoActivity"
-            android:label="添加你的事项" />
+            android:name=".ActivityAllItem"
+            android:exported="true" />
         <activity
-            android:name=".EditTodoActivity"
-            android:label="修改你的事项" />
-        <activity android:name=".MainActivity">
+            android:name=".ActivityAddTodo" />
+        <activity
+            android:name=".ActivityEditTodo"/>
+        <activity android:name=".ActivityMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

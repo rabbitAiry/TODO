@@ -15,6 +15,7 @@
     <color name="grey40">#4B4C4B</color>
     <color name="grey50">#393939</color>
     <color name="grey100">#232323</color>
+    <color name="trans_grey">#BADCD4D4</color>
     <color name="main">#45C391</color>
     <color name="lime10">#B6EFB8</color>
     <color name="lime100">#A5D6A7</color>

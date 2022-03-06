@@ -5,16 +5,22 @@ import android.content.res.Resources;
 
 import com.example.todo.R;
 
-public class TypeUtils {
+public class TodoItemUtils {
     /**
      * type key of todo_item
      */
     public static final int TYPE_ALL = 0;
     public static final int TYPE_URGENT = 1;
-    public static final int TYPE_DAILY = 2;
+    public static final int TYPE_PERIODIC = 2;
     public static final int TYPE_NORMAL = 3;
-    public static final int TYPE_COLD = 5;
+    public static final int TYPE_LATER = 5;
     public static final int TYPE_DELETE = 10;
+
+    public static final int NON_PERIOD = 0;
+    public static final int PERIOD_DAY = 1;
+    public static final int PERIOD_WEEK = 2;
+    public static final int PERIOD_MONTH = 3;
+    public static final int PERIOD_YEAR = 4;
 
     public static int getTypeColor(int type, Context context) {
         int color = 0;
@@ -26,10 +32,10 @@ public class TypeUtils {
             case TYPE_URGENT:
                 color = res.getColor(R.color.urgent, context.getTheme());
                 break;
-            case TYPE_DAILY:
+            case TYPE_PERIODIC:
                 color = res.getColor(R.color.daily, context.getTheme());
                 break;
-            case TYPE_COLD:
+            case TYPE_LATER:
                 color = res.getColor(R.color.cold, context.getTheme());
                 break;
         }
