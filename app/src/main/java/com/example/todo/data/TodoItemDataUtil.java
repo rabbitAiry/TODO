@@ -62,11 +62,11 @@ public class TodoItemDataUtil {
     }
 
     public List<TodoItem> getNowTodoItem(){
-        return todoDao.loadNowTodoItem(TodoItemUtils.TYPE_URGENT, TodoItemUtils.TYPE_NORMAL);
+        return todoDao.loadNowTodoItem(TodoItemTypeUtils.TYPE_URGENT, TodoItemTypeUtils.TYPE_NORMAL);
     }
 
     public List<TodoItem> getSpecifiedTodoItem(int type){
-        if (type == TodoItemUtils.TYPE_ALL){
+        if (type == TodoItemTypeUtils.TYPE_ALL){
             return getAllTodoItem();
         }else{
             return todoDao.loadSpecifiedTypeTodoItem(type);

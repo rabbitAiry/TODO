@@ -16,18 +16,20 @@
     <color name="grey50">#393939</color>
     <color name="grey100">#232323</color>
     <color name="trans_grey">#BADCD4D4</color>
-    <color name="main">#45C391</color>
+    <color name="main">#9CCC65</color>
+    <color name="main_light">#C5E1A5</color>
+    <color name="main_light2">#F1F8E9</color>
     <color name="lime10">#B6EFB8</color>
     <color name="lime100">#A5D6A7</color>
     <color name="lime200">#2ACD8C</color>
     <color name="lime400">#2D7E5E</color>
     <color name="lime900">#153C2D</color>
-    <color name="urgent">#FFA726</color>
-    <color name="normal">#66BB6A</color>
-    <color name="cold">#727E7E</color>
-    <color name="daily">#29B6F6</color>
-    <color name="delete">#FF7043</color>
-    <color name="bg_time_attr">#C8E6C9</color>
+    <color name="urgent">#FFB74D</color>
+    <color name="normal">#81C784</color>
+    <color name="later">#7986CB</color>
+    <color name="periodic">#4DD0E1</color>
+    <color name="delete">#E57373</color>
+    <color name="bg_time_attr">#e6e6d4</color>
 
 
     <color name="cold_bg_light">#DDECEC</color>

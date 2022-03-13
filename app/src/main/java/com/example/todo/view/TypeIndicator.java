@@ -14,11 +14,11 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class TypeBar extends Drawable {
-    public static final int radius = 6;
+public class TypeIndicator extends Drawable {
+    public static final int radius = 12;
     private final Paint paint;
 
-    public TypeBar(int color) {
+    public TypeIndicator(int color) {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(color);
     }

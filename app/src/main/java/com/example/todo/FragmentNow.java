@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.todo.data.TodoItemDataUtil;
 import com.example.todo.data.TodoItem;
 import com.example.todo.databinding.FragmentNowTodoBinding;
-import com.example.todo.view.TodoItemAdapter;
-import com.example.todo.view.TodoNowAdapter;
+import com.example.todo.adapter.TodoItemAdapter;
+import com.example.todo.adapter.TodoNowAdapter;
 
 import java.util.List;
 

@@ -30,7 +30,7 @@
         <item name="android:layout_marginLeft">14dp</item>
     </style>
 
-    <style name="radio_group">
+    <style name="activity_edit_radio_group">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">44dp</item>
         <item name="android:paddingRight">20dp</item>

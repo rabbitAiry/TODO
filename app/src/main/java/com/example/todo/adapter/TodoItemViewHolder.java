@@ -1,4 +1,4 @@
-package com.example.todo.view;
+package com.example.todo.adapter;
 
 import android.view.View;
 import android.widget.ImageButton;

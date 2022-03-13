@@ -1,4 +1,4 @@
-package com.example.todo.view;
+package com.example.todo.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.example.todo.data.TodoItem;
-import com.example.todo.data.TodoItemUtils;
+import com.example.todo.data.TodoItemTypeUtils;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class TodoNowAdapter extends TodoItemAdapter {
         super.onBindViewHolder(holder, position);
         int adapterPosition = holder.getAdapterPosition();
         TodoItem curr = itemList.get(adapterPosition);
-        holder.itemToUrgentButton.setVisibility(curr.type!=TodoItemUtils.TYPE_URGENT?View.VISIBLE:View.INVISIBLE);
+        holder.itemToUrgentButton.setVisibility(curr.type!= TodoItemTypeUtils.TYPE_URGENT?View.VISIBLE:View.INVISIBLE);
         holder.itemButtonDone.setVisibility(View.VISIBLE);
         holder.itemButtonDone.setOnClickListener(v -> {
             notifyItemRemoved(adapterPosition);
@@ -28,7 +28,7 @@ public class TodoNowAdapter extends TodoItemAdapter {
             listener.onDoneClickListener(curr);
         });
         holder.itemToUrgentButton.setOnClickListener(v -> {
-            curr.type = TodoItemUtils.TYPE_URGENT;
+            curr.type = TodoItemTypeUtils.TYPE_URGENT;
             notifyItemChanged(adapterPosition);
             listener.toUrgentClickListener(curr);
         });

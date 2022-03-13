@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">TODO</string>
+    <string name="main_toolbar_now">now</string>
+    <string name="main_toolbar_all">全部</string>
+    <string name="main_toolbar_me">我</string>
+    <string name="type_all">全部</string>
+    <string name="type_normal">普通</string>
+    <string name="type_urgent">紧急</string>
+    <string name="type_periodic">周期</string>
+    <string name="type_later">稍后</string>
+    <string name="done">确认</string>
+    <string name="description">描述 :</string>
+    <string name="add_todo">添加待办事项</string>
+    <string name="edit_todo">修改待办事项</string>
+    <string name="daily">每日</string>
+    <string name="delete">删除</string>
+    <string name="setting">更多选项</string>
+    <string name="all_item">全部内容</string>
+    <string name="type_hashtag"># 类型</string>
+    <string name="periodic_hashtag"># 周期</string>
+    <string name="delete_this_todo_item">删除这个待办事项</string>
+    <string name="times">持续次数</string>
+    <string name="start_time">起始时间</string>
+    <string name="period_tag">提醒周期为: 每隔</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="week">周</string>
+    <string name="day">天</string>
+</resources>

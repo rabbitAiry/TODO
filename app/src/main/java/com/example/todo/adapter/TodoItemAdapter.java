@@ -1,4 +1,4 @@
-package com.example.todo.view;
+package com.example.todo.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
 import com.example.todo.data.TodoItem;
-import com.example.todo.data.TodoItemUtils;
+import com.example.todo.data.TodoItemTypeUtils;
+import com.example.todo.view.TypeIndicator;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemViewHolder> {
         int adapterPosition = holder.getAdapterPosition();
         TodoItem curr = itemList.get(adapterPosition);
         holder.itemContentText.setText(curr.content);
-        holder.itemTypeBar.setBackgroundColor(TodoItemUtils.getTypeColor(curr.type, context));
+        holder.itemTypeBar.setBackground(new TypeIndicator(TodoItemTypeUtils.getTypeColorByTypeId(curr.type, context)));
         holder.itemPeriodText.setVisibility(curr.created?View.VISIBLE:View.INVISIBLE);
         holder.itemToUrgentButton.setVisibility(View.INVISIBLE);
         holder.itemButtonDone.setVisibility(View.INVISIBLE);

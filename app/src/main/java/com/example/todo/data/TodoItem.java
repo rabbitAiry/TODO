@@ -48,7 +48,7 @@ public class TodoItem implements Serializable {
         this.content = content;
         this.type = type;
         this.created = created;
-        this.periodUnit = TodoItemUtils.NON_PERIOD;
+        this.periodUnit = TodoItemTypeUtils.NON_PERIOD;
         this.periodValue = 0;
         this.periodTimes = 0;
         this.periodTimesLeft = 0;
