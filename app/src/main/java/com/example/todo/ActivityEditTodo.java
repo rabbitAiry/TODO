@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.todo.data.TodoItem;
@@ -35,6 +38,7 @@ public class ActivityEditTodo extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         new Thread(() -> dataUtil = TodoItemDataUtil.getInstance(this)).start();
+        binding.editTodoTypeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> onRadioButtonSelected(checkedId));
         Intent intent = getIntent();
         isAdd = intent.getIntExtra(MODE, MODE_ADD) == MODE_ADD;
         if (isAdd) initForAdd();
@@ -47,7 +51,15 @@ public class ActivityEditTodo extends AppCompatActivity {
             actionBar.setTitle(isAdd ? R.string.add_todo : R.string.edit_todo);
         }
         binding.editTodoButtonSubmit.setOnClickListener(v -> handleSubmit());
-        binding.editTodoTypeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> onRadioButtonSelected(checkedId));
+        binding.editTodoContent.requestFocus();
+        binding.editTodoContent.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        binding.editTodoContent.setOnEditorActionListener((v, actionId, event) -> {
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                handleSubmit();
+                return true;
+            }
+            return false;
+        });
 
 //        binding.editTodoPeriodStart.setOnClickListener(v -> {
 //            DialogFragment fragment = new FragmentDatePicker(new DatePickerListener());
@@ -62,7 +74,7 @@ public class ActivityEditTodo extends AppCompatActivity {
     }
 
     private void initForAdd() {
-        onRadioButtonSelected(TodoItemTypeUtils.TYPE_NORMAL);
+        binding.editTodoTypeRadioGroup.setButtonChecked(TodoItemTypeUtils.TYPE_NORMAL);
         binding.editTodoDeleteButton.setOnClickListener(v -> {
             Toast.makeText(ActivityEditTodo.this, "未保存", Toast.LENGTH_SHORT).show();
             finish();
@@ -71,7 +83,6 @@ public class ActivityEditTodo extends AppCompatActivity {
 
     private void initForEdit(Intent intent) {
         curr = (TodoItem) intent.getSerializableExtra(TAG_TODO_ITEM);
-        onRadioButtonSelected(curr.type);
         binding.editTodoContent.setText(curr.content);
         binding.editTodoDeleteButton.setOnClickListener(v -> {
             Toast.makeText(ActivityEditTodo.this, "已删除", Toast.LENGTH_SHORT).show();
@@ -79,7 +90,7 @@ public class ActivityEditTodo extends AppCompatActivity {
             setResult(RESULT_OK);
             finish();
         });
-        if (curr.type == TodoItemTypeUtils.TYPE_PERIODIC) binding.editTodoTypeRadioGroup.setButtonsDisabled(curr.type);
+        if (curr.type == TodoItemTypeUtils.TYPE_PERIODIC) binding.editTodoTypeRadioGroup.setButtonsDisabled(TodoItemTypeUtils.TYPE_PERIODIC);
         else binding.editTodoTypeRadioGroup.setButtonChecked(curr.type);
     }
 
@@ -120,13 +131,16 @@ public class ActivityEditTodo extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_ENTER) {
-            handleSubmit();
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onKeyUp(int keyCode, KeyEvent event) {
+//        super.onKeyUp(keyCode, event);
+//        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+//            handleSubmit();
+//            return true;
+//        }
+//        return false;
+//    }
+
 //    class DatePickerListener implements FragmentDatePicker.DatePickerListener{
 //        @Override
 //        public void onDateChosen(String date) {

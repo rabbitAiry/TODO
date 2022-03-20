@@ -1,6 +1,7 @@
 package com.example.todo.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.todo.view.TypeIndicator;
 import java.util.List;
 
 public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemViewHolder> {
+    private static final String TAG = "ToUrgent";
     public List<TodoItem> itemList;
     private final Context context;
     protected TodoListener listener;
@@ -60,6 +62,7 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemViewHolder> {
     }
 
     public void refreshData(List<TodoItem> itemList){
+        Log.d(TAG, "refreshData: ");
         this.itemList = itemList;
         notifyDataSetChanged();
     }

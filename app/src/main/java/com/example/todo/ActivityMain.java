@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.todo.databinding.MainActivityBinding;
 
@@ -32,6 +33,8 @@ public class ActivityMain extends AppCompatActivity {
             if(index<0)index = 0;
             Log.d(TAG, "swapFragment: "+index);
             Fragment curr = own[index];
+            int visible = index==0? View.VISIBLE: View.GONE;
+            binding.mainToolbarTextview.setVisibility(visible);
             manager.beginTransaction()
                     .replace(R.id.main_container, curr)
                     .commit();

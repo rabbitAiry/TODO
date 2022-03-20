@@ -1,6 +1,7 @@
 package com.example.todo.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -29,7 +30,6 @@ public class TodoNowAdapter extends TodoItemAdapter {
         });
         holder.itemToUrgentButton.setOnClickListener(v -> {
             curr.type = TodoItemTypeUtils.TYPE_URGENT;
-            notifyItemChanged(adapterPosition);
             listener.toUrgentClickListener(curr);
         });
     }

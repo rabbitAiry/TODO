@@ -3,6 +3,7 @@ package com.example.todo.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -60,7 +61,7 @@ public class TodoTypeRadioGroup extends RadioGroup {
             buttons[i] = button;
             super.addView(button, i, radioButtonParams);
         }
-        buttons[0].setChecked(true);
+        if (showAllButton)buttons[0].setChecked(true);
     }
 
     public void setButtonChecked(int typeId) {

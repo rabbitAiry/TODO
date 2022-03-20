@@ -3,6 +3,7 @@ package com.example.todo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,11 @@ import com.example.todo.adapter.TodoNowAdapter;
 import java.util.List;
 
 public class FragmentNow extends Fragment{
+    private static final String TAG = "ToUrgent";
     private FragmentNowTodoBinding binding;
     private final Context context;
     private TodoNowAdapter adapter;
     private TodoItemDataUtil todoDataUtil;
-    private static final String TAG = "Now";
     public static int REQUEST_EDIT = 1;
 
     public FragmentNow(Context context) {
@@ -67,7 +68,12 @@ public class FragmentNow extends Fragment{
 
                 @Override
                 public void toUrgentClickListener(TodoItem item) {
-                    new Thread(() -> todoDataUtil.updateTodoItem(item)).start();
+                    new Thread(() -> {
+                        Log.d(TAG, "toUrgentClickListener: ");
+                        todoDataUtil.updateTodoItem(item);
+                        List<TodoItem> list = todoDataUtil.getNowTodoItem();
+                        getActivity().runOnUiThread(() -> adapter.refreshData(list));
+                    }).start();
                 }
             });
             getActivity().runOnUiThread(() -> {
@@ -88,11 +94,5 @@ public class FragmentNow extends Fragment{
                 }).start();
             }
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }
