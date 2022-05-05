@@ -1,6 +1,5 @@
 package com.example.todo;
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.longClick;
@@ -21,8 +20,8 @@ import org.junit.runner.RunWith;
 public class TodoListNowTest {
 
     @Rule
-    public ActivityTestRule<ActivityMain> activityMainActivityTestRule =
-            new ActivityTestRule<>(ActivityMain.class);
+    public ActivityTestRule<MainActivity> activityMainActivityTestRule =
+            new ActivityTestRule<>(MainActivity.class);
 
     @Test
     public void testTagButtonNowAndAll(){

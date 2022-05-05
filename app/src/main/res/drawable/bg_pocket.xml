@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="10dp" />
+                    <gradient android:startColor="@color/grey10" android:centerColor="@color/grey50" android:endColor="@color/grey100" android:angle="180" />
+                </shape>
+            </item>
+            <item android:drawable="@drawable/ic_twotone_credit_card_24" android:width="150dp" android:height="140dp" android:gravity="right|bottom" />
+        </layer-list>
+    </item>
+</selector>

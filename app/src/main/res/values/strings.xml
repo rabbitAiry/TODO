@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">TODO</string>
     <string name="main_toolbar_now">now</string>
+    <string name="main_toolbar_note">note</string>
+    <string name="main_toolbar_reminder">reminder</string>
     <string name="main_toolbar_all">all</string>
-    <string name="main_toolbar_me">my</string>
+    <string name="main_toolbar_me">me</string>
     <string name="type_all">all</string>
     <string name="type_normal">normal</string>
     <string name="type_urgent">urgent</string>
@@ -26,4 +28,9 @@
     <string name="month">month</string>
     <string name="week">week</string>
     <string name="day">day</string>
+    <string name="not_saved">not saved</string>
+    <string name="deleted">deleted</string>
+    <string name="content_should_not_be_empty">Content should not be empty</string>
+    <string name="number_cannot_be_too_large">Number cannot be larger than 999</string>
+    <string name="invalid_number">invalid number</string>
 </resources>

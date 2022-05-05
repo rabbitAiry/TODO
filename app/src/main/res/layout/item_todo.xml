@@ -34,20 +34,6 @@
         app:layout_constraintRight_toLeftOf="@id/item_to_urgent_button"
         tools:text="吃饭睡觉打豆豆" />
 
-    <TextView
-        android:id="@+id/item_period_text"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:background="@drawable/bg_shape_time_attr"
-        android:gravity="center"
-        android:paddingHorizontal="6dp"
-        android:text="@string/daily"
-        android:textSize="12sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/item_content_text"
-        app:layout_constraintTop_toBottomOf="@id/item_button_done" />
-
     <ImageView
         android:id="@+id/item_to_urgent_button"
         android:layout_width="32dp"
@@ -61,7 +47,7 @@
         android:id="@+id/item_button_done"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:background="@drawable/button_off"
+        android:background="@drawable/button_done"
         android:focusableInTouchMode="false"
         android:layout_marginRight="24dp"
         app:layout_constraintBottom_toBottomOf="parent"

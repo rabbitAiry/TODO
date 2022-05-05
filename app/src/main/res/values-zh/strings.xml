@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">TODO</string>
+    <string name="app_name">熙熙攘攘</string>
     <string name="main_toolbar_now">now</string>
     <string name="main_toolbar_all">全部</string>
     <string name="main_toolbar_me">我</string>
+    <string name="main_toolbar_note">记事</string>
+    <string name="main_toolbar_reminder">提醒</string>
     <string name="type_all">全部</string>
     <string name="type_normal">普通</string>
     <string name="type_urgent">紧急</string>
@@ -26,4 +28,9 @@
     <string name="month">月</string>
     <string name="week">周</string>
     <string name="day">天</string>
+    <string name="not_saved">未保存</string>
+    <string name="deleted">已删除</string>
+    <string name="content_should_not_be_empty">内容不应为空</string>
+    <string name="number_cannot_be_too_large">数字不得大于999</string>
+    <string name="invalid_number">无效数字</string>
 </resources>

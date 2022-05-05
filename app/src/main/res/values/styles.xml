@@ -1,89 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="todo_radio_list_layout">
-        <item name="android:layout_height">250dp</item>
-        <item name="android:paddingTop">36dp</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="edit_todo_status_list_layout" parent="todo_radio_list_layout">
-        <item name="android:layout_height">280dp</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:layout_marginBottom">320dp</item>
-    </style>
-
-    <style name="todo_status_bar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">24dp</item>
-        <item name="android:layout_marginTop">14dp</item>
-        <item name="android:layout_marginBottom">14dp</item>
-    </style>
-
-    <style name="radio_tag">
+    <!--    public  -->
+    <style name="tag">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
     </style>
 
-    <style name="period_tag" parent="radio_tag">
-        <item name="android:layout_marginLeft">14dp</item>
-    </style>
-
-    <style name="activity_edit_radio_group">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="single_line_radio_group">
         <item name="android:layout_height">44dp</item>
-        <item name="android:paddingRight">20dp</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:layout_marginTop">4dp</item>
     </style>
 
     <style name="radio_button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">32dp</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textColor">@color/grey40</item>
         <item name="android:layout_marginRight">4dp</item>
     </style>
 
-    <style name="period_edit_text">
-        <item name="android:layout_width">48dp</item>
+    <style name="edit_of_num">
+        <item name="android:layout_width">54dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">right</item>
-        <item name="android:paddingRight">6dp</item>
+        <item name="android:paddingRight">12dp</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:inputType">number</item>
     </style>
 
-    <style name="main_toolbar_text">
+    <!--    activity_edit_todo  -->
+    <style name="tag_in_boarder" parent="tag">
+        <item name="android:layout_marginLeft">14dp</item>
+    </style>
+
+    <style name="single_line_edit_radio_group" parent="single_line_radio_group">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="fontFamily">sans-serif</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+    </style>
+
+    <style name="date_or_time_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">36dp</item>
-    </style>
-
-    <style name="main_toolbar_indicator">
-        <item name="android:layout_height">4dp</item>
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_marginBottom">6dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:background">@color/lime900</item>
-    </style>
-
-    <style name="fragment_all_select_radio_button">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:textColor">@color/grey5</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="fragment_all_radio_indicator">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:minWidth">80dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/button_date_or_time</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">8dp</item>
     </style>
 </resources>

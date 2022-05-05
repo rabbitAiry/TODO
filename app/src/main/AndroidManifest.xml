@@ -10,19 +10,16 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.TODO">
         <activity
-            android:name=".ActivityAllItem"
-            android:exported="true" />
-        <activity
-            android:name=".ActivityAddTodo" />
-        <activity
-            android:name=".ActivityEditTodo"/>
-        <activity android:name=".ActivityMain">
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ActivityEditTodo" />
+        <activity android:name=".ActivityAllItem" />
     </application>
 
 </manifest>

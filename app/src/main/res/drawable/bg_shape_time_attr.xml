@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <stroke
-        android:color="@color/lime100"
+        android:color="@color/main_light2"
         android:width="2dp" />
     <solid android:color="@color/bg_time_attr" />
     <corners android:radius="6dp" />
