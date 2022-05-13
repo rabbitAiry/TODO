@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -18,6 +19,7 @@ import com.example.todo.view.TimePickerFragment
 import com.example.todo.view.TypeIndicator
 
 class ActivityEditTodo : AppCompatActivity() {
+
     companion object {
         const val TODO_OBJECT = "todo"
         const val mode = "mode"
@@ -49,8 +51,8 @@ class ActivityEditTodo : AppCompatActivity() {
 
     private fun parseModeAndInit() {
         isAdd = intent.getIntExtra(mode, MODE_ADD) == MODE_ADD
-        if (isAdd) initForModeAdd() else initForModeEdit(intent)
         initView()
+        if (!isAdd) initForModeEdit(intent)
     }
 
     private fun initView() {
@@ -58,16 +60,27 @@ class ActivityEditTodo : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
             it.title = resources.getText(if (isAdd) R.string.add_todo else R.string.edit_todo)
         }
+        // type
         binding.editTodoTypeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             onRadioButtonSelected(checkedId)
         }
-        binding.editTodoPeriodBackgroundMask.visibility = View.VISIBLE
-        binding.editTodoButtonSubmit.setOnClickListener { handleSubmit() }
-        binding.editTodoPeriodDuration.addTextChangedListener(EditTextListener())
-        binding.editTodoTimes.addTextChangedListener(EditTextListener())
+        binding.editTodoTypeRadioGroup.setButtonChecked(TodoTypeUtil.TYPE_NORMAL)
+        onRadioButtonSelected(TodoTypeUtil.TYPE_NORMAL)
+
+        // period
         binding.editTodoPeriodRadioGroup.setOnCheckedChangeListener { _, checkedId ->
-            binding.editTodoPeriodUnit.text = TodoTypeUtil.getText(getPeriodType(checkedId), this)
+            binding.editTodoPeriodUnit.text = TodoTypeUtil.getText(
+                PeriodInfo.getPeriodInfo(getPeriodType(checkedId)).textId,
+                this
+            )
         }
+        binding.editTodoPeriodDuration.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) getNum(
+                binding.editTodoPeriodDuration.text.toString()
+            )
+        }
+        binding.editTodoPeriodUnit.text = TodoTypeUtil.getText(PeriodInfo.PERIOD_DAY.textId, this)
+        binding.editTodoPeriodStart.text = TimeDataUtil.getTodayText()
         binding.editTodoPeriodStart.setOnClickListener {
             val fragment = DatePickerFragment()
             fragment.setResultListener(object : DateOrTimeSetListener {
@@ -78,6 +91,18 @@ class ActivityEditTodo : AppCompatActivity() {
             })
             fragment.show(supportFragmentManager, "datePicker")
         }
+        binding.editTodoTimes.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) getNum(
+                binding.editTodoTimes.text.toString()
+            )
+        }
+        binding.editTodoPeriodTimesCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            binding.editTodoTimes.isEnabled = !isChecked
+        }
+
+        // remind
+        binding.editTodoRemindTimeBlock.visibility = View.INVISIBLE
+        binding.editTodoRemindTime.text = TimeDataUtil.getNowTimeText()
         binding.editTodoRemindTime.setOnClickListener {
             val fragment = TimePickerFragment()
             fragment.setResultListener(object : DateOrTimeSetListener {
@@ -87,41 +112,40 @@ class ActivityEditTodo : AppCompatActivity() {
             })
             fragment.show(supportFragmentManager, "timePicker")
         }
-        binding.editTodoPeriodTimesCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            binding.editTodoTimes.isEnabled = !isChecked
-        }
         binding.editTodoRemindCheckbox.setOnCheckedChangeListener { _, isChecked ->
             binding.editTodoRemindTimeBlock.visibility =
                 if (isChecked) View.VISIBLE else View.INVISIBLE
         }
-    }
-
-    private fun initForModeAdd() {
-        binding.editTodoTypeRadioGroup.setButtonChecked(TodoTypeUtil.TYPE_NORMAL)
         binding.editTodoDeleteButton.setOnClickListener {
             Toast.makeText(this, R.string.not_saved, Toast.LENGTH_SHORT).show()
             finish()
         }
-        binding.editTodoPeriodStart.text = TimeDataUtil.getTodayText()
-        binding.editTodoRemindTime.text = TimeDataUtil.getNowTimeText()
+        binding.editTodoButtonSubmit.setOnClickListener { handleSubmit() }
     }
 
     private fun initForModeEdit(intent: Intent) {
-        // TODO: 把周期信息也填充了
         curr = intent.getSerializableExtra(TODO_OBJECT) as TodoItem
         curr?.let {
-            binding.editTodoContent.text = it.content as Editable
+            binding.editTodoContent.setText(it.content)
+            binding.editTodoTypeRadioGroup.setButtonChecked(it.type!!)
+            onRadioButtonSelected(it.type!!)
+            if (it.type == TodoTypeUtil.TYPE_PERIODIC) {
+                binding.editTodoPeriodDuration.setText(it.periodValue.toString())
+                binding.editTodoTimes.setText(it.periodTimes.toString())
+                Toast.makeText(
+                    this,
+                    if (it.periodTimesLeft < 0) "无限次" else "还剩${it.periodTimesLeft}次",
+                    Toast.LENGTH_SHORT
+                ).show()
+                binding.editTodoPeriodStart.text = TimeDataUtil.getDateText(it.dateAdded)
+                binding.editTodoRemindTime.text = TimeDataUtil.getTimeText(it.remindTime)
+            }
             binding.editTodoDeleteButton.setOnClickListener { _ ->
                 Toast.makeText(this, R.string.deleted, Toast.LENGTH_SHORT).show()
                 ThreadPoolUtil.submitTask { TodoDataUtil.deleteTodo(it, this) }
                 setResult(RESULT_OK)
                 finish()
             }
-            if (it.type == TodoTypeUtil.TYPE_PERIODIC) {
-                binding.editTodoPeriodStart.text = TimeDataUtil.getDateText(it.dateAdded)
-                binding.editTodoRemindTime.text = TimeDataUtil.getTimeText(it.remindTime)
-            }
-            binding.editTodoTypeRadioGroup.setButtonChecked(it.type!!)
         }
     }
 
@@ -131,13 +155,24 @@ class ActivityEditTodo : AppCompatActivity() {
         val periodUnit = getPeriodType(binding.editTodoPeriodRadioGroup.checkedRadioButtonId)
         val periodValue = getNum(binding.editTodoPeriodDuration.text.toString())
         val periodTimes =
-            if (binding.editTodoPeriodTimesCheckbox.isChecked) -1 else getNum(binding.editTodoTimes.toString())
-        val startTime = TimeDataUtil.getTimeToken(binding.editTodoPeriodStart.text.toString())
-        if (!submitValidCheck(content, periodValue, periodTimes, startTime)) return
+            if (binding.editTodoPeriodTimesCheckbox.isChecked) -1 else getNum(binding.editTodoTimes.text.toString())
+        val startTime = TimeDataUtil.getDateToken(binding.editTodoPeriodStart.text.toString())
+        if (type == TodoTypeUtil.TYPE_PERIODIC && !submitValidCheck(
+                content,
+                periodValue,
+                periodTimes,
+                startTime
+            )
+        ) return
 
-        val period = PeriodData(startTime, periodUnit, periodValue, periodTimes)
+        val period = if (type == TodoTypeUtil.TYPE_PERIODIC) PeriodData(
+            startTime,
+            periodUnit,
+            periodValue,
+            periodTimes
+        ) else null
         if (isAdd)
-            TodoWrapper.getTypeWrapperById(type).handler.add(this, content, type, period)
+            TodoWrapper.getTypeWrapperById(type).handler!!.add(this, content, type, period)
         else {
             curr?.let {
                 if ((periodUnit != it.periodUnit || periodValue != it.periodValue) && type == TodoTypeUtil.TYPE_PERIODIC) {
@@ -145,7 +180,7 @@ class ActivityEditTodo : AppCompatActivity() {
                     Toast.makeText(this, "周期变更后，起始日期会发生更改，请确认", Toast.LENGTH_SHORT).show()
                     return
                 }
-                TodoWrapper.getTypeWrapperById(type).handler
+                TodoWrapper.getTypeWrapperById(type).handler!!
                     .update(this, curr!!, content, type, period)
             }
         }
@@ -233,16 +268,6 @@ class ActivityEditTodo : AppCompatActivity() {
                     .show()
                 return 0
             }
-        }
-    }
-
-    inner class EditTextListener : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-        override fun afterTextChanged(s: Editable?) {
-            s?.let { getNum(it.toString()) }
         }
     }
 }

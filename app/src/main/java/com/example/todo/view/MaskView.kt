@@ -6,11 +6,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 
-class MaskView(
+class MaskView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean = true
+    override fun onTouchEvent(event: MotionEvent?): Boolean = true
 }

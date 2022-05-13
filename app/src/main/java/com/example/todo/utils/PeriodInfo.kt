@@ -11,12 +11,12 @@ enum class PeriodInfo(var typeId: Int, var textId: Int) {
     PERIOD_YEAR(TodoTypeUtil.PERIOD_YEAR, R.string.year);
 
     companion object {
-        fun getPeriodInfo(typeId: Int): PeriodInfo? {
+        fun getPeriodInfo(typeId: Int): PeriodInfo {
             val infos = values()
             for (info in infos) {
                 if (info.typeId == typeId) return info
             }
-            return null
+            return PERIOD_DAY
         }
     }
 }

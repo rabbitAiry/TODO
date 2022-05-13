@@ -1,25 +1,18 @@
 package com.example.todo.data
 
 import android.content.Context
+import android.util.Log
 import androidx.room.*
 import androidx.room.migration.AutoMigrationSpec
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     version = 4,
-    entities = [TodoItem::class],
-    autoMigrations = [
-        AutoMigration(
-            from = 3,
-            to = 4,
-            spec = TodoDatabase.DeleteColumnDataDeleteMigration::class
-        )
-    ]
+    entities = [TodoItem::class]
 )
 abstract class TodoDatabase : RoomDatabase() {
     abstract fun todoDao(): TodoDao
-
-    @DeleteColumn(tableName = "TodoItem", columnName = "dataDelete")
-    class DeleteColumnDataDeleteMigration : AutoMigrationSpec
 
     companion object {
         private var instance: TodoDatabase? = null
@@ -29,11 +22,12 @@ abstract class TodoDatabase : RoomDatabase() {
             instance?.let {
                 return it
             }
-            return Room.databaseBuilder(
+            instance = Room.databaseBuilder(
                 context.applicationContext,
                 TodoDatabase::class.java,
                 "todo_database"
-            ).build().apply { instance = this }
+            ).build()
+            return instance!!
         }
 
     }

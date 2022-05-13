@@ -5,6 +5,6 @@ data class PeriodData(
     val periodUnit: Int,
     val periodValue: Int,
     val periodTimes: Int,
-    val periodLeft: Int = periodUnit,
+    val periodLeft: Int = periodTimes,
     val periodDone: Boolean = false
 )

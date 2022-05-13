@@ -14,13 +14,13 @@ interface TodoDao {
     @Delete
     fun deleteTodo(item: TodoItem)
 
-    @Query("select * from TodoItem where periodDone = 0")
+    @Query("select * from TodoItem")
     fun loadAllTodoItem(): List<TodoItem>
 
-    @Query("select * from TodoItem where type not in (:arg1) order by type")
+    @Query("select * from TodoItem where type not in (:arg1) and periodDone = 0 order by type")
     fun loadNowTodoItem(arg1: Int = TodoTypeUtil.TYPE_LATER): MutableList<TodoItem>
 
-    @Query("select * from TodoItem where type not in (:arg1, :arg2) order by type")
+    @Query("select * from TodoItem where type in (:arg1, :arg2) order by type")
     fun loadNormalAndUrgentItem(
         arg1: Int = TodoTypeUtil.TYPE_URGENT,
         arg2: Int = TodoTypeUtil.TYPE_NORMAL

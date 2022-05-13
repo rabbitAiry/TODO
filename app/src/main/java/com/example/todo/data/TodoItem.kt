@@ -6,7 +6,6 @@ import com.example.todo.utils.TimeDataUtil
 import com.example.todo.utils.TodoTypeUtil
 import java.io.Serializable
 
-// TODO: 将period相关特性从中解耦
 @Entity
 data class TodoItem @JvmOverloads constructor(
     @PrimaryKey(autoGenerate = true) var id: Long?,

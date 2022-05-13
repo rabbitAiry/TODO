@@ -2,6 +2,7 @@ package com.example.todo.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,8 +27,6 @@ object TimeDataUtil {
     fun getDateToken(c: Calendar): Int =
         c[Calendar.YEAR] * 10000 + (c[Calendar.MONTH] + 1) * 100 + c[Calendar.DATE]
 
-    fun getTodayToken(): Int = getDateToken(Calendar.getInstance())
-
     fun getDateToken(year: Int, month: Int, dayOfMonth: Int): Int =
         year * 10000 + (month + 1) * 100 + dayOfMonth
 
@@ -35,17 +34,19 @@ object TimeDataUtil {
     fun getDateToken(s: String): Int =
         getDateToken(
             s.substring(0, 4).toInt(),
-            s.substring(5, 7).toInt(),
+            s.substring(5, 7).toInt() - 1,
             s.substring(8, 10).toInt()
         )
+
+    fun getTodayToken(): Int = getDateToken(Calendar.getInstance())
 
     fun getTodayText(): String =
         getDateText(Calendar.getInstance())
 
     fun parseDateToken(token: Int): Calendar {
         val c = Calendar.getInstance()
-        c.set(token / 10000, token % 10000 / 100 - 1, token % 100);
-        return c;
+        c.set(token / 10000, token % 10000 / 100 - 1, token % 100)
+        return c
     }
 
     fun addDate(dayToken: Int, forwardDays: Int, timeUnit: Int = Calendar.DATE): Int {
@@ -77,12 +78,9 @@ object TimeDataUtil {
         return getTimeText(c)
     }
 
-    fun getNowTimeText(): String = getTimeText(Calendar.getInstance())
-
-    fun getNowTimeToken(): Int = getTimeToken(Calendar.getInstance())
-
     // e.g: 2200 = 22:00
     fun getTimeToken(s: String): Int {
+        Log.d("Time", "getTimeToken: $s")
         val hour = s.substring(0, 2).toInt()
         val minute = s.substring(3, 5).toInt()
         return hour * 100 + minute
@@ -93,6 +91,10 @@ object TimeDataUtil {
     }
 
     fun getTimeToken(hourOfDay: Int, minute: Int): Int = hourOfDay * 100 + minute
+
+    fun getNowTimeText(): String = getTimeText(Calendar.getInstance())
+
+    fun getNowTimeToken(): Int = getTimeToken(Calendar.getInstance())
 
     fun parseTimeToken(token: Int): Calendar {
         val c = Calendar.getInstance()
@@ -113,12 +115,17 @@ object TimeDataUtil {
         editor.apply()
     }
 
-    fun getLatestDate(context: Context): Int =
-        getPreferences(context).getInt(KEY_LATEST_DATE, getTodayToken())
+    fun getLatestDate(context: Context, todayToken: Int = getTodayToken()): Int {
+        val value = getPreferences(context).getInt(KEY_LATEST_DATE, 0)
+        return if (value == 0) {
+            setLatestDate(context, todayToken)
+            todayToken
+        } else value
+    }
 
-    fun setLatestDate(context: Context) {
+    fun setLatestDate(context: Context, todayToken: Int = getTodayToken()) {
         val editor = context.getSharedPreferences(DATE_PREFERENCE, Context.MODE_PRIVATE).edit()
-        editor.putInt(KEY_LATEST_DATE, getTodayToken())
+        editor.putInt(KEY_LATEST_DATE, todayToken)
         editor.apply()
     }
 }

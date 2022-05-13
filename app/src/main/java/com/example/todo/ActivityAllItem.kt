@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.example.todo.utils.TodoDataUtil
 import com.example.todo.utils.TodoTypeUtil
 
 class ActivityAllItem : AppCompatActivity() {
+    private val TAG = "Periodic BUG"
     lateinit var adapter: TodoItemAdapter
     var typeListOnDisplay = TodoTypeUtil.TYPE_ALL
     val REQUEST_EDIT = 1
@@ -39,6 +41,10 @@ class ActivityAllItem : AppCompatActivity() {
         binding.allItemList.layoutManager = LinearLayoutManager(this)
         adapter = TodoItemAdapter(null, this, object : TodoItemAdapter.TodoListener {
             override fun onItemLongClickListener(item: TodoItem?) {
+                onItemClickListener(item)
+            }
+
+            override fun onItemClickListener(item: TodoItem?) {
                 val intent = Intent(this@ActivityAllItem, ActivityEditTodo::class.java)
                 intent.putExtra(ActivityEditTodo.TODO_OBJECT, item)
                 intent.putExtra(ActivityEditTodo.mode, ActivityEditTodo.MODE_EDIT)
@@ -57,7 +63,7 @@ class ActivityAllItem : AppCompatActivity() {
         }
     }
 
-    fun updateList(type: Int) {
+    private fun updateList(type: Int) {
         typeListOnDisplay = type
         ThreadPoolUtil.submitTask {
             handler.sendMessage(
@@ -83,8 +89,10 @@ class ActivityAllItem : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RESULT_OK) {
-            if (requestCode == REQUEST_EDIT) updateList(typeListOnDisplay)
+        Log.d(TAG, "onActivityResult: $requestCode == RESULT_OK $requestCode == REQUEST_EDIT")
+        if (resultCode == RESULT_OK && requestCode == REQUEST_EDIT) {
+            updateList(typeListOnDisplay)
+            setResult(RESULT_OK)
         }
     }
 

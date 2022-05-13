@@ -25,4 +25,8 @@ open class NormalTodoSubmit {
             TodoDataUtil.updateTodo(context, todoItem)
         }
     }
+
+    open fun done(todoItem: TodoItem, context: Context) {
+        TodoDataUtil.deleteTodo(todoItem, context)
+    }
 }

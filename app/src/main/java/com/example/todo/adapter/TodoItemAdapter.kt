@@ -19,6 +19,7 @@ open class TodoItemAdapter(
 
     interface TodoListener {
         fun onItemLongClickListener(item: TodoItem?)
+        fun onItemClickListener(item: TodoItem?)
         fun onDoneClickListener(item: TodoItem?)
         fun toUrgentClickListener(item: TodoItem?)
     }
@@ -35,7 +36,13 @@ open class TodoItemAdapter(
                 TypeIndicator(TodoTypeUtil.getTypeColorByTypeId(curr.type!!, context))
             holder.itemToUrgentButton.visibility = View.INVISIBLE
             holder.itemButtonDone.visibility = View.INVISIBLE
-            holder.itemView.setOnClickListener { listener.onItemLongClickListener(curr) }
+            holder.itemView.setOnClickListener {
+                listener.onItemClickListener(curr)
+            }
+            holder.itemView.setOnLongClickListener {
+                listener.onItemLongClickListener(curr)
+                true
+            }
         }
     }
 

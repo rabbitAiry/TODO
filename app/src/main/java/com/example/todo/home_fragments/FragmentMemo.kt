@@ -5,13 +5,12 @@ import android.util.Log
 import com.example.todo.R
 import java.util.concurrent.CountDownLatch
 
-class FragmentNote(val listener: StartActivityListener) : FragmentBase(listener) {
-    override val title = R.string.main_toolbar_note
+class FragmentMemo(val listener: StartActivityListener) : FragmentBase(listener) {
+    override val title = R.string.main_toolbar_reminder
     private val TAG = "ActivityLoading"
 
-
     override fun initFragmentData(context: Context) {
-        Log.d(TAG, "initFragmentData: Me")
+        Log.d(TAG, "initFragmentData: reminder")
     }
 
     override fun refreshData(context: Context) {

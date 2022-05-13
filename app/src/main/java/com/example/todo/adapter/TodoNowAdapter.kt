@@ -1,6 +1,7 @@
 package com.example.todo.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import com.example.todo.data.TodoItem
 import com.example.todo.utils.TodoTypeUtil
@@ -12,12 +13,12 @@ class TodoNowAdapter(itemList: MutableList<TodoItem>?, context: Context, listene
         super.onBindViewHolder(holder, position)
         val adapterPosition: Int = holder.adapterPosition
         itemList?.let {
-            val curr: TodoItem = it.get(adapterPosition)
+            val curr: TodoItem = it[adapterPosition]
             holder.itemToUrgentButton.visibility =
-                if (TodoTypeUtil.TYPE_URGENT == curr.type) View.INVISIBLE else View.VISIBLE
+                if (curr.type == TodoTypeUtil.TYPE_NORMAL) View.VISIBLE else View.INVISIBLE
             holder.itemButtonDone.visibility = View.VISIBLE
             holder.itemButtonDone.setOnClickListener { _ ->
-                notifyItemRemoved(adapterPosition)
+                notifyItemRemoved(holder.adapterPosition)
                 it.remove(curr)
                 listener.onDoneClickListener(curr)
             }

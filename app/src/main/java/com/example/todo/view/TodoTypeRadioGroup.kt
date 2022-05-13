@@ -40,11 +40,11 @@ class TodoTypeRadioGroup(context: Context, attrs: AttributeSet? = null) :
         if (showButtonAll) {
             buttons = arrayOfNulls(typeList.size)
             for (i in typeList.indices) buttons[i] = buttonInit(typeList[i], i)
-            buttons[0]!!.isChecked = true
         } else {
             buttons = arrayOfNulls(typeList.size - 1)
             for (i in 1 until typeList.size) buttons[i - 1] = buttonInit(typeList[i], i - 1)
         }
+        buttons[0]!!.isChecked = true
     }
 
     /**
@@ -64,18 +64,6 @@ class TodoTypeRadioGroup(context: Context, attrs: AttributeSet? = null) :
     fun setButtonChecked(typeId: Int) {
         for (item in buttons) {
             item?.let { if (it.id == typeId) it.isChecked = true }
-        }
-    }
-
-    fun setButtonDisabledFor(expectedTypeId: Int) {
-        for (item in buttons) {
-            item?.let {
-                if (it.id == expectedTypeId) {
-                    it.isChecked = true
-                } else {
-                    it.isEnabled = false
-                }
-            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.todo.utils
 
 import android.content.Context
+import android.util.Log
 import com.example.todo.data.TodoDao
 import com.example.todo.data.TodoDatabase
 import com.example.todo.data.TodoItem
@@ -31,21 +32,21 @@ object TodoDataUtil {
         else getTodoDao(context).loadSpecifiedTypeTodoItem(type)
     }
 
-    fun checkForPeriodicTodo(context: Context) {
-        val list = getTodoDao(context).loadPeriodDoneTodoItem()
-        val todayToken = TimeDataUtil.getTodayToken()
+    fun checkForPeriodicTodo(context: Context, todayToken: Int = TimeDataUtil.getTodayToken()) {
+        val list = getSpecifiedTypeTodo(TodoTypeUtil.TYPE_PERIODIC, context)
         for (todo in list) {
             if (TimeDataUtil.addDate(
                     todo.dateAdded, todo.periodTimes, todo.periodTimesLeft,
                     todo.periodValue, todo.periodUnit
-                ) >= todayToken
+                ) <= todayToken
             ) {
                 if (todo.periodDone) {
                     todo.periodDone = false
                 } else {
                     todo.periodTimesLeft--
-                    if (todo.periodTimesLeft == 0) {
+                    if (todo.periodTimesLeft in 0..1) {
                         todo.type = TodoTypeUtil.TYPE_NORMAL
+                        todo.dateAdded = todayToken
                     }
                 }
                 updateTodo(context, todo)
@@ -53,15 +54,20 @@ object TodoDataUtil {
         }
     }
 
-    fun checkIsTodoOutOfTime(context: Context) {
+    fun checkIsTodoOutOfTime(
+        context: Context,
+        todayToken: Int = TimeDataUtil.getTodayToken()
+    ): Boolean {
         val list = getTodoDao(context).loadNormalAndUrgentItem()
-        val todayToken = TimeDataUtil.getTodayToken()
         val limit = TimeDataUtil.getDateLimit(context)
+        var deleted = false
         for (todo in list) {
-            if (TimeDataUtil.addDate(todo.dateAdded, limit) > todayToken) {
+            if (todayToken > TimeDataUtil.addDate(todo.dateAdded, limit)) {
                 todo.type = TodoTypeUtil.TYPE_LATER
                 updateTodo(context, todo)
+                deleted = true
             }
         }
+        return deleted
     }
 }

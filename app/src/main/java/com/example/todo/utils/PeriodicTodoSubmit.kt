@@ -9,7 +9,7 @@ class PeriodicTodoSubmit : NormalTodoSubmit() {
     override fun add(context: Context, content: String, type: Int, periodInfo: PeriodData?) {
         periodInfo?.let {
             ThreadPoolUtil.submitTask {
-                val periodDone = TimeDataUtil.getTodayToken() >= it.startTime
+                val periodDone = TimeDataUtil.getTodayToken() < it.startTime    // 未开始
                 TodoDataUtil.insertTodo(
                     context, TodoItem(
                         null,
@@ -49,7 +49,7 @@ class PeriodicTodoSubmit : NormalTodoSubmit() {
                     it.periodValue,
                     it.periodUnit
                 )
-                todoItem.periodDone = nextPeriod <= TimeDataUtil.getTodayToken()
+                todoItem.periodDone = nextPeriod > TimeDataUtil.getTodayToken() // 下一次未开始
                 todoItem.periodUnit = it.periodUnit
                 todoItem.periodValue = it.periodValue
                 todoItem.periodTimes = it.periodTimes
@@ -60,5 +60,12 @@ class PeriodicTodoSubmit : NormalTodoSubmit() {
             }
             TodoDataUtil.updateTodo(context, todoItem)
         }
+    }
+
+    override fun done(todoItem: TodoItem, context: Context) {
+        todoItem.periodTimesLeft--
+        todoItem.periodDone = true
+        if (todoItem.periodTimesLeft != 0) TodoDataUtil.updateTodo(context, todoItem)
+        else TodoDataUtil.deleteTodo(todoItem, context)
     }
 }

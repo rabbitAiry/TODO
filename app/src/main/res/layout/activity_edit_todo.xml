@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_edit_todo">
+    android:background="@color/main_light2">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -151,17 +151,6 @@
                     app:layout_constraintRight_toRightOf="@id/edit_todo_period_radio_group"
                     app:layout_constraintTop_toTopOf="@id/edit_todo_period_radio_group" />
 
-                <com.example.todo.view.MaskView
-                    android:id="@+id/edit_todo_period_background_mask"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="@drawable/bg_radio_group_mask"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@id/edit_todo_period_background"
-                    app:layout_constraintLeft_toLeftOf="@id/edit_todo_period_background"
-                    app:layout_constraintRight_toRightOf="@id/edit_todo_period_background"
-                    app:layout_constraintTop_toTopOf="@id/edit_todo_period_background" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -212,7 +201,7 @@
             <TextView
                 android:id="@+id/edit_todo_delete_button"
                 style="@style/tag"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/button_delete"
                 android:elevation="1dp"
                 android:paddingHorizontal="12dp"

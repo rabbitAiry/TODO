@@ -7,8 +7,13 @@ import android.view.MotionEvent
 import android.widget.FrameLayout
 import kotlin.math.abs
 
-class ActivityMainContainer(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    FrameLayout(context, attrs, defStyleAttr) {
+class ActivityMainContainer @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
+) :
+    FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
     private var intercepted: Boolean = false
     private var lastX: Int = 0
     private var lastY: Int = 0
